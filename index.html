@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<title>Zombie Dice</title>
+	</head>
+	<body>
+
+		<table>
+			<tr>
+				<th>Brains</th>
+				<th>Shotguns</th>
+				<th>Points!</th>
+			</tr>
+			<tr>
+				<td class="brains">0</td>
+				<td class="shotguns">0</td>
+				<td class="points">0</td>
+			</tr>
+		</table>
+
+		<input style="width:200px" value="Roll Three!" />
+		<button class="roll">Roll!</button>
+		<button class="keep">Keep!</button>
+
+		<script src="jquery.js"></script>
+		<script>
+			$(function(){
+				var diceName = ['greenDie', 'yellowDie', 'redDie'];
+				var dice = {
+					greenDie: ['brains', 'brains', 'brains', 'brains', 'shotgun', 'footsteps'],
+					yellowDie: ['brains', 'brains', 'shotgun', 'shotgun', 'footsteps', 'footsteps'],
+					redDie: ['brains', 'shotgun', 'shotgun', 'shotgun', 'footsteps', 'footsteps']
+				};
+				var score = {
+					brains: 0,
+					shotguns: 0,
+					total: 0
+				}
+
+				$('button').on('click', function(e){
+					var randoms = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]
+					var dicePulled = [diceName[randoms[0]], diceName[randoms[1]], diceName[randoms[2]]];
+					var diceValues = [];
+					var curr;
+
+
+					e.preventDefault();
+
+					if($(this).hasClass('roll')){
+						for(var i = 0; i < dicePulled.length; i++){
+							curr = Math.floor(Math.random() * 3);
+
+							diceValues.push(dice[dicePulled[i]][curr]);
+
+							if(dice[dicePulled[i]][curr] === 'brains'){
+								score.brains += 1;
+							}
+							if(dice[dicePulled[i]][curr] === 'shotgun'){
+								score.shotguns += 1;
+							}
+						}
+
+						if(score.shotguns >= 3){
+							score.brains = 0;
+							score.shotguns = 0;
+						}
+					}
+
+					if($(this).hasClass('keep')){
+						console.log('test');
+						score.total += score.brains;
+						score.brains = 0;
+						score.shotguns = 0
+					}
+
+
+					$('input').attr('value', dicePulled);
+					$('.brains').text(score.brains);
+					$('.shotguns').text(score.shotguns);
+					$('.points').text(score.total);
+
+					console.log(diceValues);
+					console.log(dice);
+
+				});
+
+			});
+		</script>
+	</body>
+</html>

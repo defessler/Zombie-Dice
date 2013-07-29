@@ -1,4 +1,4 @@
 Zombie-Dice
 ===========
 
-A HTML5 Zombie Dice prototype.
+Quick prototype of a multiplayer HTML5 version of Zombie Dice.
